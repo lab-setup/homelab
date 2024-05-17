@@ -19,12 +19,23 @@ variable "host" {
 variable "vm_name" {
     type = string
     description = "name of the vm to be created"
-    default = "temp"
+    # default = "temp"
 }
 
 variable "vm_path" {
     type = string
     description = "path on host machine to store the vhdx"
-    # default = "d:\\VMs\\${var.vm_name}.vhdx"
+    default = "d:\\VMs"
 }
 
+variable "vm_hd_type" {
+    type = string
+    description = "path on host machine to store the vhdx"
+    default = "vhdx"
+}
+
+variable "switch_name" {
+    type = string
+    description = "path on host machine to store the vhdx"
+    default = "Default External Switch"
+}
