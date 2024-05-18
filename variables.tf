@@ -13,7 +13,7 @@ variable "password" {
 variable "host" {
     type = string
     description = "host machine ip address"
-    # default = "10.0.0.5"
+    default = "10.0.0.5"
 }
 
 variable "vm_name" {
@@ -38,4 +38,16 @@ variable "switch_name" {
     type = string
     description = "path on host machine to store the vhdx"
     default = "Default External Switch"
+}
+
+variable "iso_name" {
+    type = string
+    description = "name of iso boot image"
+    default = "UBUNTU_20_4"
+}
+
+variable "iso_source" {
+    type = string
+    description = "path of the iso boot image"
+    default = "/Users/vaibhav/Downloads/iso"
 }

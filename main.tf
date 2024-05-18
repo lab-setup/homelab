@@ -5,7 +5,7 @@ provider "hyperv" {
   host            = var.host
   port            = 5986
   https           = true
-  insecure        = false
+  insecure        = true
   use_ntlm        = true
   tls_server_name = ""
   cacert_path     = ""
@@ -16,7 +16,7 @@ provider "hyperv" {
 }
 
 # Create a vhd
-resource "hyperv_vhd" "temp_vhd" {
+resource "hyperv_vhd" "vm_vhd" {
   path = "${var.vm_path}\\${var.vm_name}.${var.vm_hd_type}"
   #source               = ""
   #source_vm            = ""
@@ -29,23 +29,23 @@ resource "hyperv_vhd" "temp_vhd" {
   #physical_sector_size = 0
 }
 
-data "archive_file" "bootstrap" {
+data "archive_file" "iso_image" {
   type        = "zip"
-  source_dir  = "bootstrap"
-  output_path = "bootstrap.zip"
+  source_dir  = "${var.iso_source}"
+  output_path = "${var.iso_name}.zip"
 }
 
-resource "hyperv_iso_image" "bootstrap" {
-  volume_name               = "BOOTSTRAP"
-  source_zip_file_path      = data.archive_file.bootstrap.output_path
-  source_zip_file_path_hash = data.archive_file.bootstrap.output_sha
-  destination_iso_file_path = "${var.vm_path}\\bootstrap.iso"
+resource "hyperv_iso_image" "iso_image" {
+  volume_name               = "${var.iso_name}"
+  source_zip_file_path      = data.archive_file.iso_image.output_path
+  source_zip_file_path_hash = data.archive_file.iso_image.output_sha
+  destination_iso_file_path = "$env:TEMP\\${var.iso_name}.iso"
   iso_media_type            = "dvdplusrw_duallayer"
   iso_file_system_type      = "unknown"
 }
 
-resource "hyperv_vhd" "web_server_g2_vhd" {
-  path = "c:\\web_server\\web_server_g2.vhdx" #Needs to be absolute path
+resource "hyperv_vhd" "server_vhd" {
+  path = "${var.vm_path}\\${var.vm_name}.vhdx" #Needs to be absolute path
   size = 10737418240                          #10GB
 }
 
@@ -69,7 +69,7 @@ resource "hyperv_machine_instance" "default" {
   processor_count                         = 1
   # smart_paging_file_path                  = "C:\\ProgramData\\Microsoft\\Windows\\Hyper-V"
   # snapshot_file_location                  = "C:\\ProgramData\\Microsoft\\Windows\\Hyper-V"
-  dynamic_memory                         = false
+  # dynamic_memory                         = false
   static_memory = true
   state         = "Running"
 
@@ -120,7 +120,7 @@ resource "hyperv_machine_instance" "default" {
     controller_number   = "0"
     controller_location = "1"
     //path = ""
-    path               = hyperv_iso_image.bootstrap.destination_file_path
+    path               = hyperv_iso_image.iso_image.destination_iso_file_path
     resource_pool_name = ""
   }
 
@@ -129,7 +129,7 @@ resource "hyperv_machine_instance" "default" {
     controller_type                 = "Scsi"
     controller_number               = "0"
     controller_location             = "0"
-    path                            = hyperv_vhd.web_server_g2_vhd.path
+    path                            = hyperv_vhd.server_vhd.path
     disk_number                     = 4294967295
     resource_pool_name              = "Primordial"
     support_persistent_reservations = false
