@@ -57,3 +57,9 @@ variable "iso_path" {
   description = "path of the iso boot image"
   default     = "d:\\iso\\ubuntu-22.04.4-live-server-amd64.iso"
 }
+
+variable "vhdx_path" {
+  type        = string
+  description = "VM name to copy vhdx from"
+  default     = "github-actions"
+}
