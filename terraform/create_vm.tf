@@ -1,4 +1,4 @@
-resource "hyperv_machine_instance" "default" {
+resource "hyperv_machine_instance" "" {
   name                                    = "temp_vm"
   generation                              = 2
   automatic_critical_error_action         = "Pause"
