@@ -1,5 +1,5 @@
-resource "hyperv_machine_instance" "" {
-  name                                    = "temp_vm"
+resource "hyperv_machine_instance" "worker_node_1" {
+  name                                    = "worker_node_1"
   generation                              = 2
   automatic_critical_error_action         = "Pause"
   automatic_critical_error_action_timeout = 30
@@ -23,12 +23,6 @@ resource "hyperv_machine_instance" "" {
     preferred_network_boot_protocol = "IPv4"
     console_mode                    = "None"
     pause_after_boot_failure        = "Off"
-    # boot_order {
-    #   boot_type           = "DvdDrive"
-    #   path = var.iso_path
-    #   controller_number   = "0"
-    #   controller_location = "1"
-    # }
     boot_order {
       boot_type           = "HardDiskDrive"
       controller_number   = "0"
@@ -59,15 +53,6 @@ resource "hyperv_machine_instance" "" {
     "Time Synchronization"    = true
     "VSS"                     = true
   }
-
-  # Create dvd drive
-  # dvd_drives {
-  #   controller_number   = "0"
-  #   controller_location = "1"
-  #   //path = ""
-  #   path               = var.iso_path
-  #   resource_pool_name = ""
-  # }
 
   # Create a hard disk drive
   hard_disk_drives {
