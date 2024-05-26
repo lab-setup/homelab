@@ -16,11 +16,11 @@ variable "host" {
   default     = "10.0.0.5"
 }
 
-variable "vm_name" {
-  type        = string
-  description = "name of the vm to be created"
-  # default = "temp"
-}
+# variable "vm_name" {
+#   type        = string
+#   description = "name of the vm to be created"
+#   # default = "temp"
+# }
 
 variable "vm_path" {
   type        = string
@@ -40,8 +40,14 @@ variable "switch_name" {
   default     = "Default External Switch"
 }
 
+# variable "vhdx_path" {
+#   type        = string
+#   description = "VM name to copy vhdx from"
+#   default     = "github-actions"
+# }
+
 variable "vhdx_path" {
   type        = string
-  description = "VM name to copy vhdx from"
-  default     = "github-actions"
+  description = "Disk name to copy vhdx from"
+  default     = "d:\\VMs\\github-actions\\Virtual Hard Disks\\github-actions.vhdx"
 }

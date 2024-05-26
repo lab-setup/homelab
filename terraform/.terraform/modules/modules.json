@@ -1,1 +1,1 @@
-{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"assets","Source":"./resources","Dir":"resources"}]}
+{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"assets","Source":"./resources","Dir":"resources"},{"Key":"cluster_vhd","Source":"./copy_vhdx.tf","Dir":"copy_vhdx.tf"}]}

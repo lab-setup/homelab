@@ -15,6 +15,3 @@ provider "hyperv" {
   timeout         = "30s"
 }
 
-
-
-
