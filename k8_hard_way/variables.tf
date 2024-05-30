@@ -13,14 +13,14 @@ variable "password" {
 variable "host" {
   type        = string
   description = "host machine ip address"
-  default     = "10.0.0.5"
+  default     = "10.0.0.50"
 }
 
-variable "vm_name" {
-  type        = string
-  description = "name of the vm to be created"
-  # default = "temp"
-}
+# variable "vm_name" {
+#   type        = string
+#   description = "name of the vm to be created"
+#   # default = "temp"
+# }
 
 variable "vm_path" {
   type        = string

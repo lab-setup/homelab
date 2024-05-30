@@ -16,6 +16,7 @@ resource "hyperv_machine_instance" "jumpbox" {
   processor_count                         = 1
   static_memory                           = true
   state                                   = "Running"
+  depends_on                              = [hyperv_vhd.jumpbox_vhd]
 
   # Configure firmware
   vm_firmware {
@@ -74,7 +75,7 @@ resource "hyperv_machine_instance" "jumpbox" {
     controller_type                 = "Scsi"
     controller_number               = "0"
     controller_location             = "0"
-    path                            = hyperv_vhd.vm_vhd.path
+    path                            = hyperv_vhd.jumpbox_vhd.path
     disk_number                     = 4294967295
     resource_pool_name              = "Primordial"
     support_persistent_reservations = false
@@ -82,5 +83,44 @@ resource "hyperv_machine_instance" "jumpbox" {
     minimum_iops                    = 0
     qos_policy_id                   = "00000000-0000-0000-0000-000000000000"
     override_cache_attributes       = "Default"
+  }
+
+  network_adaptors {
+    name                                       = "wan"
+    switch_name                                = "des"
+    management_os                              = false
+    is_legacy                                  = false
+    dynamic_mac_address                        = false
+    static_mac_address                         = "00-15-5D-00-05-01"
+    mac_address_spoofing                       = "Off"
+    dhcp_guard                                 = "Off"
+    router_guard                               = "Off"
+    port_mirroring                             = "None"
+    ieee_priority_tag                          = "Off"
+    vmq_weight                                 = 100
+    iov_queue_pairs_requested                  = 1
+    iov_interrupt_moderation                   = "Off"
+    iov_weight                                 = 100
+    ipsec_offload_maximum_security_association = 512
+    maximum_bandwidth                          = 0
+    minimum_bandwidth_absolute                 = 0
+    minimum_bandwidth_weight                   = 0
+    mandatory_feature_id                       = []
+    resource_pool_name                         = ""
+    test_replica_pool_name                     = ""
+    test_replica_switch_name                   = ""
+    virtual_subnet_id                          = 0
+    allow_teaming                              = "On"
+    not_monitored_in_cluster                   = false
+    storm_limit                                = 0
+    dynamic_ip_address_limit                   = 0
+    device_naming                              = "Off"
+    fix_speed_10g                              = "Off"
+    packet_direct_num_procs                    = 0
+    packet_direct_moderation_count             = 0
+    packet_direct_moderation_interval          = 0
+    vrss_enabled                               = true
+    vmmq_enabled                               = false
+    vmmq_queue_pairs                           = 16
   }
 }
