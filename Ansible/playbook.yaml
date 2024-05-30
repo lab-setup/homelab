@@ -1,0 +1,31 @@
+---
+- name: Configure master node
+  remote_user: ubuntu
+
+  tasks:
+    - name: Update hostname
+      hosts: master
+      ansible.builtin.hostname:
+        name: master.node.pc
+        use: "debian"
+
+    - name: Update hostname
+      hosts: workers
+      ansible.builtin.hostname:
+        name: {{ item.hostname  }}
+        use: "debian"
+      loop: workers
+
+
+    - name: Write the apache config file
+      hosts: master
+      ansible.builtin.apt:
+        update_cache: true
+        upgrade: "yes"
+
+    - name: Turn Swap off
+      ansible.builtin.shell:
+        cmd: swapoff -a
+        become: true
+    
+    -
