@@ -1,0 +1,25 @@
+- name: Update hostname
+  ansible.builtin.hostname:
+    name: {{ host.hostname  }}
+    use: "debian"
+  loop: hosts
+
+- name: Upgrade package list
+  ansible.builtin.apt:
+    update_cache: true
+    upgrade: "yes"
+
+- name: Turn Swap off
+  ansible.builtin.shell:
+    cmd: swapoff -a
+    become: true
+
+- name: Install Docker
+  ansible.builtin.command:
+    argv: ["install", "-m", "0755", "-d", "/etc/apt/keyrings"]
+    become: true
+
+- name: Download docker.asc
+  ansible.builtin.uri:
+    url: 
+    method: POST

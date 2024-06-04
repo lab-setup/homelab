@@ -17,7 +17,6 @@
         use: "debian"
       loop: workers
 
-
     - name: Write the apache config file
       hosts: master
       ansible.builtin.apt:
@@ -29,4 +28,10 @@
         cmd: swapoff -a
         become: true
     
-    - 
+    - name: Install Docker
+      hosts: all
+      ansible.builtin.command:
+        argv: ["install", "-m", "0755", "-d", "/etc/apt/keyrings"]
+        become: true
+
+
