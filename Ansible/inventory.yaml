@@ -1,6 +1,15 @@
-master:
-  - 10.0.0.210
+kubernetes:
+  hosts:
+    master:
+      - master_node:
+        ip: 10.0.0.210
+        hostname: master_node
 
-workers:
-  - 10.0.0.211:
+    workers:
+    - worker_0:
+      ip: 10.0.0.211
+      hostname: worker_1
+
+    - worker_1:
+      ip: 10.0.0.211
       hostname: worker_1

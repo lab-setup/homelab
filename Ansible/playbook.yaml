@@ -4,10 +4,11 @@
 
   tasks:
     - name: Update hostname
-      hosts: master
+      hosts: all
       ansible.builtin.hostname:
-        name: master.node.pc
+        name: {{ host.  }}
         use: "debian"
+      loop: hosts
 
     - name: Update hostname
       hosts: workers
@@ -28,4 +29,4 @@
         cmd: swapoff -a
         become: true
     
-    -
+    - 
