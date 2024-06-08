@@ -90,7 +90,7 @@ resource "hyperv_machine_instance" "server" {
     management_os                              = false
     is_legacy                                  = false
     dynamic_mac_address                        = false
-    static_mac_address                         = "00-15-5D-00-05-04"
+    static_mac_address                         = "00-15-5D-00-05-02"
     mac_address_spoofing                       = "Off"
     dhcp_guard                                 = "Off"
     router_guard                               = "Off"
