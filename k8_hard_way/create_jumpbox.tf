@@ -48,7 +48,7 @@ resource "hyperv_machine_instance" "jumpbox" {
     maximum_count_per_numa_node                       = 0
     maximum_count_per_numa_socket                     = 0
     enable_host_resource_protection                   = false
-    expose_virtualization_extensions                  = false
+    expose_virtualization_extensions                  = true
   }
 
   # Configure integration services

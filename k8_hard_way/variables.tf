@@ -1,7 +1,7 @@
 variable "user" {
   type        = string
   description = "Username of the the host machine"
-  default     = "vaibhav"
+  # default     = "vaibhav"
 }
 
 variable "password" {
@@ -13,7 +13,7 @@ variable "password" {
 variable "host" {
   type        = string
   description = "host machine ip address"
-  default     = "10.0.0.50"
+  # default     = "10.0.0.50"
 }
 
 # variable "vm_name" {
@@ -30,36 +30,18 @@ variable "vm_path" {
 
 variable "vm_hd_type" {
   type        = string
-  description = "path on host machine to store the vhdx"
+  description = "extension of the vm hard disk"
   default     = "vhdx"
 }
 
 variable "switch_name" {
   type        = string
-  description = "path on host machine to store the vhdx"
+  description = "name of the switch"
   default     = "Default External Switch"
-}
-
-variable "iso_name" {
-  type        = string
-  description = "name of iso boot image"
-  default     = "UBUNTU_20_4"
-}
-
-variable "iso_source" {
-  type        = string
-  description = "path of the iso boot image"
-  default     = "iso/"
-}
-
-variable "iso_path" {
-  type        = string
-  description = "path of the iso boot image"
-  default     = "d:\\iso\\ubuntu-22.04.4-live-server-amd64.iso"
 }
 
 variable "vhdx_path" {
   type        = string
-  description = "VM name to copy vhdx from"
-  default     = "github-actions"
+  description = "path to copy vhdx from"
+  default     = "d:\\VMs\\rhel_9.vhdx"
 }
