@@ -1,15 +1,21 @@
-kubernetes:
+jumphosts:  
   hosts:
-    master:
-      - master_node:
-        ip: 10.0.0.210
-        hostname: master_node
+    jumphost:
+      hot_ip: 10.0.0.211
+      hostname: jumphost
+        
+master:
+  hosts:
+    server:
+      ip: 10.0.0.212
+      hostname: k8_server
+        
+workers:
+  hosts:
+    k8_worker_0:
+      ip: 10.0.0.213
+      hostname: k8_worker_0
 
-    workers:
-    - worker_0:
-      ip: 10.0.0.211
-      hostname: worker_1
-
-    - worker_1:
-      ip: 10.0.0.211
-      hostname: worker_1
+    k8_worker_1:
+      ip: 10.0.0.214
+      hostname: k8_worker_1

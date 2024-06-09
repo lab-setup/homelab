@@ -1,8 +1,10 @@
+---
+# tasks file for master
 - name: Update hostname
   ansible.builtin.hostname:
-    name: {{ host.hostname }}
-    use: "debian"
-  loop: hosts
+    gather_facts: true
+    name: inventory_hostname
+    use: "redhat"
 
 - name: Upgrade package list
   ansible.builtin.apt:
@@ -14,29 +16,56 @@
     cmd: swapoff -a
     become: true
 
+- name: Download docker.sh
+  ansible.builtin.uri:
+    url: https://get.docker.com
+    method: GET
+    dest: /tmp/docker.sh
+    become: true
+
 - name: Install Docker
   ansible.builtin.command:
-    argv: ["install", "-m", "0755", "-d", "/etc/apt/keyrings"]
+    argv: ["sudo", "sh", "./get-docker.sh", "--dry-run"]
     become: true
 
-- name: Download docker.asc
+- name: Download cri-dockerd
   ansible.builtin.uri:
-    url: https://download.docker.com/linux/ubuntu/gpg
-    method: POST
-    dest: /etc/apt/keyrings/docker.asc
+    url: https://github.com/Mirantis/cri-dockerd/releases/download/v0.3.14/cri-dockerd-0.3.14-3.el8.x86_64.rpm
+    method: GET
+    dest: /tmp/cri-dockerd-0.3.14-3.el8.x86_64.rpm
     become: true
 
-- name: Change permissions for docker.asc
-  ansible.builtin.file:
-    mode: a+r
+- name: Install cri-dockerd
+  ansible.builtin.yum:
+    name: /tmp/cri-dockerd-0.3.14-3.el8.x86_64.rpm
+    state: present
     become: true
 
-- name: Add docker repo
-  ansible.builtin.shell:
-    cmd: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu jammy stable | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null"
+- name: Set permissive mode 
+  ansible.posix.selinux:
+    state: permissive
+    
+- name: Add K8 repo 
+  ansible.builtin.yum_repository:
+    name: kubernetes
+    baseurl: https://pkgs.k8s.io/core:/stable:/v1.30/rpm/
+    enabled: true
+    gpgcheck: true
+    gpgcakey: https://pkgs.k8s.io/core:/stable:/v1.30/rpm/repodata/repomd.xml.key
+    exclude: ["kubelet", "kubeadm", "kubectl", "cri-tools", "kubernetes-cni"]
 
-- name: Upgrade package list
-  ansible.builtin.apt:
-    update_cache: true
-    upgrade: "yes"
+- name: Install kuberenetes
+  ansible.builtin.dnf:
+    name: 
+      - kubelet 
+      - kubeadm 
+      - kubectl 
+    exclude: ["kubernetes"]
 
+- name: Enable kubelet
+  ansible.builtin.systemd_service:
+    name: kubelet
+    enabled: true
+    state: started
+  
+  

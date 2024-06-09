@@ -1,37 +1,15 @@
 ---
-- name: Configure master node
-  remote_user: ubuntu
+- name: Set up kubeadm on master
+  diff: true
+  gather_facts: true
+  check_mode: true
+  hosts: master
+  roles: master
 
-  tasks:
-    - name: Update hostname
-      hosts: all
-      ansible.builtin.hostname:
-        name: {{ host.  }}
-        use: "debian"
-      loop: hosts
-
-    - name: Update hostname
-      hosts: workers
-      ansible.builtin.hostname:
-        name: {{ item.hostname  }}
-        use: "debian"
-      loop: workers
-
-    - name: Write the apache config file
-      hosts: master
-      ansible.builtin.apt:
-        update_cache: true
-        upgrade: "yes"
-
-    - name: Turn Swap off
-      ansible.builtin.shell:
-        cmd: swapoff -a
-        become: true
-    
-    - name: Install Docker
-      hosts: all
-      ansible.builtin.command:
-        argv: ["install", "-m", "0755", "-d", "/etc/apt/keyrings"]
-        become: true
-
+- name: Set up kubeadm on workers
+  diff: true
+  gather_facts: true
+  check_mode: true
+  hosts: workers
+  roles: workers
 
