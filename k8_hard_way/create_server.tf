@@ -1,5 +1,5 @@
-resource "hyperv_machine_instance" "server" {
-  name                                    = "server"
+resource "hyperv_machine_instance" "k8_server" {
+  name                                    = "k8_server"
   generation                              = 2
   automatic_critical_error_action         = "Pause"
   automatic_critical_error_action_timeout = 30
@@ -13,10 +13,10 @@ resource "hyperv_machine_instance" "server" {
   low_memory_mapped_io_space              = 134217728
   memory_startup_bytes                    = 4294967296
   notes                                   = ""
-  processor_count                         = 1
+  processor_count                         = 2
   static_memory                           = true
   state                                   = "Running"
-  depends_on                              = [hyperv_vhd.server_vhd]
+  depends_on                              = [hyperv_vhd.k8_server_vhd]
 
   # Configure firmware
   vm_firmware {
@@ -48,7 +48,7 @@ resource "hyperv_machine_instance" "server" {
     maximum_count_per_numa_node                       = 0
     maximum_count_per_numa_socket                     = 0
     enable_host_resource_protection                   = false
-    expose_virtualization_extensions                  = false
+    expose_virtualization_extensions                  = true
   }
 
   # Configure integration services
@@ -75,7 +75,7 @@ resource "hyperv_machine_instance" "server" {
     controller_type                 = "Scsi"
     controller_number               = "0"
     controller_location             = "0"
-    path                            = hyperv_vhd.server_vhd.path
+    path                            = hyperv_vhd.k8_server_vhd.path
     disk_number                     = 4294967295
     resource_pool_name              = "Primordial"
     support_persistent_reservations = false
