@@ -4,12 +4,13 @@
   gather_facts: true
   check_mode: true
   hosts: master
-  roles: master
+  roles: 
+  - master
 
 - name: Set up kubeadm on workers
   diff: true
   gather_facts: true
   check_mode: true
   hosts: workers
-  roles: workers
-
+  roles: 
+  - workers
