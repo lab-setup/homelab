@@ -1,5 +1,5 @@
-resource "hyperv_machine_instance" "jumphost" {
-  name                                    = "jumphost"
+resource "hyperv_machine_instance" "jumpbox" {
+  name                                    = "jumpbox"
   generation                              = 2
   automatic_critical_error_action         = "Pause"
   automatic_critical_error_action_timeout = 30
@@ -16,7 +16,7 @@ resource "hyperv_machine_instance" "jumphost" {
   processor_count                         = 1
   static_memory                           = true
   state                                   = "Running"
-  depends_on                              = [hyperv_vhd.jumphost_vhd]
+  depends_on                              = [hyperv_vhd.jumpbox_vhd]
 
   # Configure firmware
   vm_firmware {
@@ -75,7 +75,7 @@ resource "hyperv_machine_instance" "jumphost" {
     controller_type                 = "Scsi"
     controller_number               = "0"
     controller_location             = "0"
-    path                            = hyperv_vhd.jumphost_vhd.path
+    path                            = hyperv_vhd.jumpbox_vhd.path
     disk_number                     = 4294967295
     resource_pool_name              = "Primordial"
     support_persistent_reservations = false
