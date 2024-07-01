@@ -25,7 +25,7 @@ variable "host" {
 variable "vm_path" {
   type        = string
   description = "path on host machine to store the vhdx"
-  default     = "d:\\VMs"
+  default     = "f:\\VMs"
 }
 
 variable "vm_hd_type" {
@@ -43,5 +43,5 @@ variable "switch_name" {
 variable "vhdx_path" {
   type        = string
   description = "path to copy vhdx from"
-  default     = "d:\\VMs\\rhel_9.vhdx"
+  default     = "f:\\VMs\\rhel_9.vhdx"
 }
