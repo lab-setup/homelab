@@ -11,3 +11,5 @@
 ## To Convert RHEL vmdk to Hyper V vhd
 
 ```PS C:\Program Files\Oracle\VirtualBox> .\VBoxManage.exe clonehd  --format vhd "D:\Downloads\composer-api-01d6a418-9cf7-4e5c-8134-66ca29c05b19-disk.vmdk" "D:\Downloads\composer-api-01d6a418-9cf7-4e5c-8134-66ca29c05b19-disk.vhd"```
+
+## [How to Configure remote desktop settings](https://github.com/taliesins/terraform-provider-hyperv)
